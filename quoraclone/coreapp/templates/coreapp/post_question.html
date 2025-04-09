@@ -1,0 +1,20 @@
+<!-- coreapp/templates/coreapp/post_question.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post a Question</title>
+</head>
+<body>
+    <h1>Post a New Question</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Question</button>
+    </form>
+
+    <p><a href="{% url 'home' %}">Back to home</a></p>
+</body>
+</html>

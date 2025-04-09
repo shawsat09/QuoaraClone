@@ -1,0 +1,71 @@
+<!-- coreapp/templates/coreapp/home.html -->
+<!-- {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QuoraClone - Home</title>
+    <link rel="stylesheet" href="{% static 'coreapp/styles.css' %}">
+
+</head>
+<body>
+    <h1>Welcome to QuoraClone</h1>
+
+    {% if user.is_authenticated %}
+        <p>Logged in as {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+        <p><a href="{% url 'post_question' %}">Post a new question</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a></p>
+    {% endif %}
+
+    <h2>All Questions</h2>
+    <ul>
+        {% for question in questions %}
+            <li><a href="{% url 'question_detail' question.pk %}">{{ question.title }}</a> by {{ question.author.username }}</li>
+        {% empty %}
+            <li>No questions yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'logout' %}">Logout</a>
+
+
+</body>
+</html> -->
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QuoraClone - Home</title>
+    <link rel="stylesheet" href="{% static 'coreapp/styles.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to QuoraClone</h1>
+
+    {% if user.is_authenticated %}
+        <p>Logged in as {{ user.username }} |
+            <a href="{% url 'logout' %}">Logout</a>
+        </p>
+        <p><a href="{% url 'post_question' %}">Post a new question</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> |
+           <a href="{% url 'signup' %}">Sign Up</a>
+        </p>
+    {% endif %}
+
+    <h2>All Questions</h2>
+    <ul>
+        {% for question in questions %}
+            <li>
+                <a href="{% url 'question_detail' question.pk %}">{{ question.title }}</a>
+                by {{ question.author.username }}
+            </li>
+        {% empty %}
+            <li>No questions yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

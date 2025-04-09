@@ -1,0 +1,54 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ question.title }}</title>
+</head>
+<body>
+    <h1>{{ question.title }}</h1>
+    <p>{{ question.body }}</p>
+    <p>Posted by {{ question.author.username }} on {{ question.created_at }}</p>
+
+    <hr>
+    <h2>Answers</h2>
+    <ul>
+        {% for answer in answers %}
+            <li>
+                <p>{{ answer.body }}</p>
+                <p>By {{ answer.author.username }} | {{ answer.created_at }}</p>
+                <p>Likes: {{ answer.likes.count }}</p>
+
+                {% if user.is_authenticated %}
+                    <form action="{% url 'like_answer' answer.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        {% if user in answer.likes.all %}
+                            <button type="submit">💔 Unlike</button>
+                        {% else %}
+                            <button type="submit">❤️ Like</button>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <p><a href="{% url 'login' %}">Log in</a> to like this answer.</p>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No answers yet.</li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+        <hr>
+        <h3>Post Your Answer</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Answer</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to post an answer.</p>
+    {% endif %}
+
+    <p><a href="{% url 'home' %}">Back to home</a></p>
+</body>
+</html>
